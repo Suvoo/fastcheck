@@ -4,14 +4,27 @@ import tensorflow as tf
 from keras.preprocessing import image
 import requests
 from PIL import Image
+from fastapi.middleware.cors import CORSMiddleware
+# from pyngrok import ngrok
+# import uvicorn
+# import nest_asyncio
 
-model = tf.keras.models.load_model('kaggle\working\ceptionpath')
 
 gen_label_map = {0: 'battery', 1: 'biological', 2: 'brown-glass', 3: 'cardboard',
                   4: 'clothes', 5: 'green-glass', 6: 'metal', 7: 'paper', 8: 'plastic',
                     9: 'shoes', 10: 'trash', 11: 'white-glass'}
 
 app = FastAPI()
+model = tf.keras.models.load_model('kaggle\working\ceptionpath')
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def root():
@@ -24,6 +37,7 @@ async def read_item(url: str):
     img = image.img_to_array(img)
     img = np.expand_dims(img, axis = 0)
     # ans = img.shape
+    
     pred = model.predict(img)
     # pred = pred.argmax(1)
     # pred = [gen_label_map[item] for item in pred]
@@ -41,5 +55,11 @@ async def read_item(url: str):
     # return Response(content=preda, media_type="application/list")
     return {str(preda)}
 
+# ngrok_tunnel = ngrok.connect(8000)
+# print('Public URL:', ngrok_tunnel.public_url)
+# nest_asyncio.apply()
+# uvicorn.run(app, port=8000)
+
 # https://i.ibb.co/KKDw9fy/shoes1017.jpg
+# https://i.ibb.co/R39SK3Z/test.jpg
 # uvicorn fast:app --reload
