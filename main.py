@@ -15,7 +15,7 @@ gen_label_map = {0: 'battery', 1: 'biological', 2: 'brown-glass', 3: 'cardboard'
                     9: 'shoes', 10: 'trash', 11: 'white-glass'}
 
 app = FastAPI()
-model = tf.keras.models.load_model('kaggle\working\ceptionpath')
+model = tf.keras.models.load_model('kaggle/working/ceptionpath')
 origins = ["*"]
 
 app.add_middleware(
@@ -58,7 +58,10 @@ async def read_item(url: str):
 # ngrok_tunnel = ngrok.connect(8000)
 # print('Public URL:', ngrok_tunnel.public_url)
 # nest_asyncio.apply()
-uvicorn.run(app, host='0.0.0.0',port=3000) #make it 8000
+# uvicorn.run(app, host='0.0.0.0',port=3000) #make it 8000
+
+if __name__ == "__main__":
+    uvicorn.run("__main__:app", host="0.0.0.0", port=3000)
 
 # https://i.ibb.co/KKDw9fy/shoes1017.jpg
 # https://i.ibb.co/R39SK3Z/test.jpg
