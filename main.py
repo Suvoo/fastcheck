@@ -6,7 +6,7 @@ import requests
 from PIL import Image
 from fastapi.middleware.cors import CORSMiddleware
 # from pyngrok import ngrok
-# import uvicorn
+import uvicorn
 # import nest_asyncio
 
 
@@ -58,7 +58,7 @@ async def read_item(url: str):
 # ngrok_tunnel = ngrok.connect(8000)
 # print('Public URL:', ngrok_tunnel.public_url)
 # nest_asyncio.apply()
-# uvicorn.run(app, port=8000)
+uvicorn.run(app, port=3000) #make it 8000
 
 # https://i.ibb.co/KKDw9fy/shoes1017.jpg
 # https://i.ibb.co/R39SK3Z/test.jpg
