@@ -34,7 +34,9 @@ def root():
 async def read_item(url: str):
     img_width, img_height = 320,320
     img = Image.open(requests.get(url, stream=True).raw).resize((img_width, img_height))
-    img = image.img_to_array(img)
+    # img = image.img_to_array(img)
+    img = tf.keras.utils.img_to_array(img)
+    
     img = np.expand_dims(img, axis = 0)
     # ans = img.shape
     
